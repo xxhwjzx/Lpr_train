@@ -1,0 +1,1 @@
+python main.py train -ti F:/test/plate_data_rectify/ -tl train_label.txt -vi F:/test/rotate_label/ -vl test_label.txt -b 16 -pre ocr_plate_all_w_rnn_2.h5 -img-size 160 40 -n 50 -c checkpoints/weights.{epoch:02d}-{val_loss:.2f}.h5 -log log
