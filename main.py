@@ -11,11 +11,14 @@ from keras.callbacks import ModelCheckpoint, TensorBoard
 import tensorflow as tf
 import keras.backend.tensorflow_backend as KTF
 
-# 进行配置，使用30%的GPU
+
+#tf.ConfigProto()函数用在创建session的时候，用来对session进行参数配置：
 config = tf.ConfigProto()
+# 进行配置，使用50%的GPU
 config.gpu_options.per_process_gpu_memory_fraction = 0.5
 session = tf.Session(config=config)
 
+#这里一共83个
 CHARS = ['京', '沪', '津', '渝', '冀', '晋', '蒙', '辽', '吉', '黑',
          '苏', '浙', '皖', '闽', '赣', '鲁', '豫', '鄂', '湘', '粤',
          '桂', '琼', '川', '贵', '云', '藏', '陕', '甘', '青', '宁',
@@ -28,13 +31,15 @@ CHARS = ['京', '沪', '津', '渝', '冀', '晋', '蒙', '辽', '吉', '黑',
          '沈', '兰', '成', '济', '海', '民', '航', '空',
          ]
 
+#构建车牌字符的字典
 CHARS_DICT = {char: i for i, char in enumerate(CHARS)}
 
+#总字符长度
 NUM_CHARS = len(CHARS)
 
 
-# The actual loss calc occurs here despite it not being
-# an internal Keras loss function
+# The actual loss calc occurs here despite it not being an internal Keras loss function
+#尽管不是内部Keras损失函数，但实际损失计算在此发生
 def ctc_lambda_func(args):
     y_pred, labels, input_length, label_length = args
     y_pred = y_pred[:, :, 0, :]
